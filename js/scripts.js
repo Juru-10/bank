@@ -4,12 +4,8 @@ function Banking(balance){
   this.balance=balance;
 }
 
-function Entering(userName,password){
-  this.userName=userName;
-  this.password=password;
-}
-
 var data,enter1, enter2;
+var uName,pWord;
 
 Banking.prototype.subs=function(withdraw){
   if(withdraw<=this.balance){
@@ -25,11 +21,15 @@ Banking.prototype.adding=function(deposit){
 }
 
 $(document).ready(function(){
-  alert("Enter the INITIAL BALANCE first the click the SUBMIT Button for further transactions to be made.");
+
   $("button#create").click(function(event){
-    $(".creation").show();
+    $("#create").hide();
+    $(".creation").show(function(){
+      alert("Enter the INITIAL BALANCE first the click the SUBMIT Button for further transactions to be made.");
+    });
     $("#enter").hide();
     $(".row").hide();
+
     var fName=$("input#firstName").val();
     var lName=$("input#lastName").val();
     var uName=$("input#uName").val();
@@ -41,19 +41,21 @@ $(document).ready(function(){
     $("input#uName").val("");
     $("input#pWord").val("");
     $("input#initBal").val("");
+
     event.preventDefault();
   });
-  $("#submit").click(function(event){
+  $("#submit1").click(function(event){
     $(".creation").hide();
     $("#create").hide();
     $("#enter").show();
 
     var initBal=parseInt($("input#initBal").val());
-    var uName=$("input#userName").val();
-    var pWord=$("input#password").val();
-
     this.balance=initBal;
     $("#balance").text(this.balance);
+
+    // if(initBal=="NaN"){
+    //   alert("Enter the INITIAL BALANCE first the click the SUBMIT Button for further transactions to be made.");
+    // }
 
     data = new Banking(initBal)
     console.log(data)
@@ -62,15 +64,27 @@ $(document).ready(function(){
   });
 
   $("button#enter").click(function(event){
+    $("#enter").hide();
+    $(".credentials").show();
+
+    event.preventDefault();
+  });
+
+  $("#submit2").click(function(event){
+    $(".credentials").hide();
+    $("button#enter").hide();
+    $("#logOut").show();
+
+    uName=$("input#uName").val();
+    pWord=$("input#pWord").val();
+
     var userName=$("input#uName").val();
     var password=$("input#pWord").val();
 
-    this.userName=userName;
-    this.password=password;
-    $("#userName").val(this.userName);
-    $("#password").val(this.password);
+    $("#userName").text(uName);
+    $("#password").text(pWord);
 
-    if((this.userName==userName) && (this.password==password)){
+    if((userName==uName) && (password==pWord)){
       $(".row").show();
     }
     else{
@@ -78,7 +92,6 @@ $(document).ready(function(){
     }
     $("input#userName").val("");
     $("input#password").val("");
-    $(".credentials").show();
     event.preventDefault();
   });
 
@@ -96,6 +109,15 @@ $(document).ready(function(){
     data.adding(deposited);
     $("#balance").text(data.balance);
     $("input#deposit").val("");
+    event.preventDefault();
+  });
+
+  $("#logOut").click(function(event){
+    $("button#create").show();
+    $(".credentials").hide();
+    $(".row").hide();
+    $("#logOut").hide();
+    $("#enter").show();
     event.preventDefault();
   });
 });

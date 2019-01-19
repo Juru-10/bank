@@ -1,6 +1,6 @@
-/* .creation,.credentials,.row{
+.creation,.credentials,.row,#logOut{
   display: none;
-} */
+}
 *{
   background-color: #eaae;
 }
