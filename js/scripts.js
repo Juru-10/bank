@@ -1,68 +1,101 @@
-var access=function(){
-  return money=1000;
+function Banking(balance){
+  // this.withdraw = withdraw;
+  // this.deposit=deposit;
+  this.balance=balance;
 }
 
-function Banking(money){
-  this.withdraw=0;
-  this.deposit=0;
-  this.balance=money;
+function Entering(userName,password){
+  this.userName=userName;
+  this.password=password;
 }
 
-Banking.prototype.remove=function(){
-  this.balance-=this.withdraw;
+var data,enter1, enter2;
+
+Banking.prototype.subs=function(withdraw){
+  if(withdraw<=this.balance){
+    return this.balance-=withdraw;
+  }
+  else {
+    alert("You have no sufficient funds to perform this transaction.");
+  }
 }
 
-Banking.prototype.save=function(){
-  this.balance+=this.deposit;
+Banking.prototype.adding=function(deposit){
+  return this.balance+=deposit;
 }
 
 $(document).ready(function(){
-  $("button#enter").click(function(event){
+  alert("Enter the INITIAL BALANCE first for further transactions to be made.");
+  $("button#create").click(function(event){
+    $(".creation").show();
+    $("#enter").hide();
+    $(".row").hide();
+    var fName=$("input#firstName").val();
+    var lName=$("input#lastName").val();
+    var uName=$("input#uName").val();
+    var pWord=$("input#pWord").val();
+    var initBal=parseInt($("input#initBal").val());
+
+    $("input#firstName").val("");
+    $("input#lastName").val("");
+    $("input#uName").val("");
+    $("input#pWord").val("");
+    $("input#initBal").val("");
     event.preventDefault();
-    $(".form").show();
+  });
+  $("#submit").click(function(event){
+    $(".creation").hide();
+    $("#create").hide();
+    $("#enter").show();
 
-    $("#submit").click(function(event){
-      var userName=$("input#userName").val();
-      var password=$("input#password").val();
-      if((userName == "assu") && (password == "12345")){
-        $(".row").show();
-      }
-      else{
-        alert("either the entered username or password is not correct!");
-      }
+    var initBal=parseInt($("input#initBal").val());
+    var uName=$("input#userName").val();
+    var pWord=$("input#password").val();
 
-      $("input#userName").val("");
-      $("input#password").val("");
-      event.preventDefault();
-    });
+    this.balance=initBal;
+    $("#balance").text(this.balance);
+
+    data = new Banking(initBal)
+    console.log(data)
+
+    event.preventDefault();
   });
 
-  // var withdrawn=$("input#withdraw").val();
-  // var deposited=$("input#deposit").val();
+  $("button#enter").click(function(event){
+    var userName=$("input#uName").val();
+    var password=$("input#pWord").val();
 
-  // enter1=new Banking(withdrawn);
-  // enter2=new Banking(deposited);
+    this.userName=userName;
+    this.password=password;
+    $("#userName").val(this.userName);
+    $("#password").val(this.password);
 
-  // $("#one").append(withdrawn.withdraw);
-  // $("#one").text(deposited.deposit);
+    if((this.userName==userName) && (this.password==password)){
+      $(".row").show();
+    }
+    else{
+      alert("either the entered username or password is not correct!");
+    }
+    $("input#userName").val("");
+    $("input#password").val("");
+    $(".credentials").show();
+    event.preventDefault();
+  });
 
   $("#remove").click(function(event){
-    var withdrawn=$("input#withdraw").val();
-    enter1=new Banking(withdrawn);
-    $("#one").text(withdrawn.withdraw);
-    $("#balance").append(enter1.remove());
+    var withdrawn=parseInt($("input#withdraw").val());
+    $("#one").text(withdrawn);
+    data.subs(withdrawn);
+    $("#balance").text(data.balance);
     $("input#withdraw").val("");
+    event.preventDefault();
   });
   $("#save").click(function(event){
-    var deposited=$("input#deposit").val();
-    enter2=new Banking(deposited);
-    $("#one").text(deposited.deposit);
-    $("#balance").append(enter2.save());
+    var deposited=parseInt($("input#deposit").val());
+    $("#two").text(deposited);
+    data.adding(deposited);
+    $("#balance").text(data.balance);
     $("input#deposit").val("");
+    event.preventDefault();
   });
-
-  // $("input#withdraw").val("");
-  // $("input#deposit").val("");
-
-
 });
