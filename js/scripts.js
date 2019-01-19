@@ -1,68 +1,101 @@
-var access=function(){
-  return money=1000;
+function Banking(balance, withdraw, deposit){
+  // this.withdraw = withdraw;
+  // this.deposit=deposit;
+  this.balance=balance;
+}
+  var data,enter1, enter2;
+Banking.prototype.subs=function(withdraw){
+  if(withdraw<=this.balance){
+    return this.balance-=withdraw;
+  }
+  else {
+    alert("You have no sufficient funds to perform this transaction.");
+  }
 }
 
-function Banking(money){
-  this.withdraw=0;
-  this.deposit=0;
-  this.balance=money;
-}
-
-Banking.prototype.remove=function(){
-  this.balance-=this.withdraw;
-}
-
-Banking.prototype.save=function(){
-  this.balance+=this.deposit;
+Banking.prototype.adding=function(deposit){
+  return this.balance+=deposit;
 }
 
 $(document).ready(function(){
-  $("button#enter").click(function(event){
+
+  $("button#create").click(function(event){
+    $(".creation").show();
+    $("#enter").hide();
+    $(".row").hide();
+    var fName=$("input#firstName").val();
+    var lName=$("input#lastName").val();
+    var uName=$("input#userName").val();
+    var pWord=$("input#password").val();
+    var initBal=parseInt($("input#initBal").val());
+
+    $("input#firstName").val("");
+    $("input#lastName").val("");
+    $("input#userName").val("");
+    $("input#password").val("");
+    $("input#initBal").val("");
     event.preventDefault();
-    $(".form").show();
+  });
+  $("#submit").click(function(event){
+    $(".creation").hide();
+    $("#create").hide();
+    $("#enter").show();
 
-    $("#submit").click(function(event){
-      var userName=$("input#userName").val();
-      var password=$("input#password").val();
-      if((userName == "assu") && (password == "12345")){
-        $(".row").show();
-      }
-      else{
-        alert("either the entered username or password is not correct!");
-      }
+    var initBal=parseInt($("input#initBal").val());
+    var uName=$("input#userName").val();
+    var pWord=$("input#password").val();
 
-      $("input#userName").val("");
-      $("input#password").val("");
-      event.preventDefault();
-    });
+    this.balance=initBal;
+    $("#balance").text(this.balance);
+
+    data = new Banking(initBal,)
+    console.log(data)
+
+    event.preventDefault();
   });
 
-  // var withdrawn=$("input#withdraw").val();
-  // var deposited=$("input#deposit").val();
+  $("button#enter").click(function(event){
 
-  // enter1=new Banking(withdrawn);
-  // enter2=new Banking(deposited);
+        var userName=$("input#userName").val();
+        var password=$("input#password").val();
+        if((userName == "") && (password == "")){
+          $(".row").show();
+        }
+        else{
+          alert("either the entered username or password is not correct!");
+        }
+        $("input#userName").val("");
+        $("input#password").val("");
+    $(".credentials").show();
+    event.preventDefault();
 
-  // $("#one").append(withdrawn.withdraw);
-  // $("#one").text(deposited.deposit);
+
+  });
+
 
   $("#remove").click(function(event){
-    var withdrawn=$("input#withdraw").val();
-    enter1=new Banking(withdrawn);
-    $("#one").text(withdrawn.withdraw);
-    $("#balance").append(enter1.remove());
+    var withdrawn=parseInt($("input#withdraw").val());
+
+    $("#one").text(withdrawn);
+
+    data.subs(withdrawn);
+
+    $("#balance").text(data.balance);
+
     $("input#withdraw").val("");
+    event.preventDefault();
   });
   $("#save").click(function(event){
-    var deposited=$("input#deposit").val();
-    enter2=new Banking(deposited);
-    $("#one").text(deposited.deposit);
-    $("#balance").append(enter2.save());
-    $("input#deposit").val("");
-  });
+    var deposited=parseInt($("input#deposit").val());
 
-  // $("input#withdraw").val("");
-  // $("input#deposit").val("");
+    $("#two").text(deposited);
+
+    data.adding(deposited);
+    $("#balance").text(data.balance);
+
+    $("input#deposit").val("");
+    event.preventDefault();
+  });
 
 
 });
