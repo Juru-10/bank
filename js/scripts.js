@@ -25,7 +25,11 @@ Banking.prototype.adding=function(deposit){
 }
 
 $(document).ready(function(){
+<<<<<<< HEAD
   alert("Enter the INITIAL BALANCE first for further transactions to be made.");
+=======
+
+>>>>>>> 14b8e5fc5bb9a696f03a1117c93c0e84908ebc22
   $("button#create").click(function(event){
     $(".creation").show();
     $("#enter").hide();
@@ -47,6 +51,7 @@ $(document).ready(function(){
     $(".creation").hide();
     $("#create").hide();
     $("#enter").show();
+<<<<<<< HEAD
 
     var initBal=parseInt($("input#initBal").val());
     var uName=$("input#userName").val();
@@ -55,6 +60,16 @@ $(document).ready(function(){
     this.balance=initBal;
     $("#balance").text(this.balance);
 
+=======
+
+    var initBal=parseInt($("input#initBal").val());
+    var uName=$("input#userName").val();
+    var pWord=$("input#password").val();
+
+    this.balance=initBal;
+    $("#balance").text(this.balance);
+
+>>>>>>> 14b8e5fc5bb9a696f03a1117c93c0e84908ebc22
     data = new Banking(initBal)
     console.log(data)
 
